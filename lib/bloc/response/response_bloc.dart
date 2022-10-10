@@ -3,21 +3,21 @@ import 'package:equatable/equatable.dart';
 import 'package:reto_patio/models/response_model.dart';
 import 'package:reto_patio/repositories/api_repository.dart';
 
-part 'items_event.dart';
-part 'items_state.dart';
+part 'response_event.dart';
+part 'response_state.dart';
 
 
-class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
-  ItemsBloc(): super(ItemsInitial()) {
+class ResponseBloc extends Bloc<ResponseEvent, ResponseState> {
+  ResponseBloc(): super(ResponseInitial()) {
     final ApiRepository apiRepository = ApiRepository();
 
-    on<GetItemList>((event, emit) async {
+    on<GetResponse>((event, emit) async {
       try {
-        emit(ItemsLoading());
+        emit(ResponseLoading());
         final response = await apiRepository.fetchItemList(event.query);
-        emit(ItemsLoaded(response));
+        emit(ResponseLoaded(response));
       } on NetWorkError {
-        emit(const ItemsError('Failed to fetch data, is your Devide Online?'));
+        emit(const ResponseError('Failed to fetch data, is your Devide Online?'));
       }
     });
   }

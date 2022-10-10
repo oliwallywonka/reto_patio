@@ -18,6 +18,7 @@ class ItemModel {
         required this.permalink,
         required this.thumbnail,
         required this.tags,
+        this.pictures
     });
 
     String id;
@@ -28,6 +29,7 @@ class ItemModel {
     String permalink;
     String thumbnail;
     List<String> tags;
+    List<Picture>? pictures;
 
     factory ItemModel.fromJson(Map<String, dynamic> json) => ItemModel(
         id: json["id"],
@@ -38,6 +40,8 @@ class ItemModel {
         permalink: json["permalink"],
         thumbnail: json["thumbnail"],
         tags: List<String>.from(json["tags"].map((x) => x)),
+        pictures: json["pictures"] == null ? null : List<Picture>.from(json["pictures"].map((x) => Picture.fromJson(x))),
+        
     );
 
     Map<String, dynamic> toJson() => {
@@ -49,5 +53,21 @@ class ItemModel {
         "permalink": permalink,
         "thumbnail": thumbnail,
         "tags": List<dynamic>.from(tags.map((x) => x)),
+    };
+}
+
+class Picture {
+    Picture({
+        required this.url,
+    });
+
+    String url;
+
+    factory Picture.fromJson(Map<String, dynamic> json) => Picture(
+        url: json["url"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "url": url
     };
 }
